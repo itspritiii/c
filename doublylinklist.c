@@ -178,6 +178,24 @@ void displayList() {
     }
     printf("\n");
 }
+void reverseList() {
+    if (head == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+    struct Node *temp = NULL;
+    struct Node *current = head;
+    while (current != NULL) {
+        temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        current = current->prev;
+    }
+    if (temp != NULL) {
+        head = temp->prev;
+    }
+    printf("List reversed.\n");
+}
 int main() {
     int choice, value, position;
 
@@ -191,7 +209,7 @@ int main() {
         printf("6. Delete at Position\n");
         printf("7. Delete by Value\n");
         printf("8. Display List\n");
-        printf("9. Exit\n");
+        printf("9. Reverse List\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         
@@ -239,11 +257,11 @@ int main() {
                 displayList();
                 break;
             case 9:
-                printf("Exiting program...\n");
-                return 0;
+                reverseList();
+                break;
             default:
                 printf("Invalid choice! Please try again.\n");
         }
-    } while (choice != 9);
+    } while (choice != 10);
     return 0;
 }
