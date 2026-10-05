@@ -6,6 +6,7 @@ c) Insertion Sort
 d) Radix Sort
 e) Heap Sort
 f) Merge Sort
+g) Quick Sort
 */
 
 #include <stdio.h>
@@ -132,6 +133,26 @@ void merge_sort(int arr[], int l, int r) {
         merge(arr, l, m, r);
     }
 }
+void quick_sort(int arr[], int low, int high) {
+    if (low < high) {
+        int pivot = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+        int pi = i + 1;
+        quick_sort(arr, low, pi - 1);
+        quick_sort(arr, pi + 1, high);
+    }
+}
 
 int main() {
     int n, choice;
@@ -150,6 +171,7 @@ int main() {
     printf("4. Radix Sort\n");
     printf("5. Heap Sort\n");
     printf("6. Merge Sort\n");
+    printf("7. Quick Sort\n");
     scanf("%d", &choice);
     
     clock_t start, end;
@@ -176,12 +198,14 @@ int main() {
         case 6:
             merge_sort(arr, 0, n - 1);
             break;
+        case 7:
+            quick_sort(arr, 0, n - 1);
+            break;
         default:
             printf("Invalid choice!\n");
             free(arr);
             return 1;
     }
-    
     end = clock();
     cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
     
